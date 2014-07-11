@@ -237,3 +237,5 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-github-sign:before        { content: "\f092"; }
 .icon-upload-alt:before         { content: "\f093"; }
 .icon-lemon:before              { content: "\f094"; }
+.icon-weibo-sign:before  {content: "\f06e";}
+.icon-QQzone-sign:before  {content: "\f07e";}

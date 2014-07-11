@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>blog - RONG</title>
+    <title>Xrlin's Blog - RONG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="RONG">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css" />
     <style type="text/css">
       body {
-        padding-top: 60px;
+        padding-top: 150px;
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -46,8 +46,10 @@
     <link rel="apple-touch-icon" sizes="72x72" href="/theme/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/theme/images/apple-touch-icon-114x114.png">
 
-    <link href="/" type="application/atom+xml" rel="alternate" title="blog ATOM Feed" />
-
+    <link href="/" type="application/atom+xml" rel="alternate" title="Xrlin's Blog ATOM Feed" />
+<a href="https://github.com/xrlin/xrlin.github.io">
+<img style="position: absolute; top: 90px; left: 1200px; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
   </head>
 
   <body>
@@ -60,38 +62,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/index.html">blog </a>
+          <a class="brand" href="/index.html">Xrlin's Blog </a>
           <div class="nav-collapse">
             <ul class="nav">
+                <li><a href="/pages/about-me.html">About Me</a></li>
                           <li class="divider-vertical"></li>
                   <li >
-                    <a href="/category/bar.html">
-						<i class="icon-folder-open icon-large"></i>bar
+                    <a href="/category/pelican.html">
+						<i class="icon-folder-open icon-large"></i>Pelican
 					</a>
                   </li>
                   <li >
-                    <a href="/category/cat1.html">
-						<i class="icon-folder-open icon-large"></i>cat1
-					</a>
-                  </li>
-                  <li >
-                    <a href="/category/content.html">
-						<i class="icon-folder-open icon-large"></i>content
-					</a>
-                  </li>
-                  <li >
-                    <a href="/category/myblog.html">
-						<i class="icon-folder-open icon-large"></i>MyBlog
-					</a>
-                  </li>
-                  <li >
-                    <a href="/category/test_data.html">
-						<i class="icon-folder-open icon-large"></i>test_data
-					</a>
-                  </li>
-                  <li >
-                    <a href="/category/yeah.html">
-						<i class="icon-folder-open icon-large"></i>yeah
+                    <a href="/category/ri-zhi.html">
+						<i class="icon-folder-open icon-large"></i>日志
 					</a>
                   </li>
 
@@ -110,23 +93,68 @@
       <div class="row">
         <div class="span9" id="content">
         <div class="article">
-                <h1><a href="/plugin-test.html">Testing</a></h1>
+                <h1><a href="/yong-pelicanda-jian-bo-ke-de-yi-xie-wen-ti-ji-jie-jue-fang-fa.html">用pelican搭建博客的一些问题及解决方法</a></h1>
                 <div class="well small"><footer class="post-info">
 <span class="label">Date</span>
-<abbr class="published" title="3000-07-09T00:00:00">
-        <i class="icon-calendar"></i>周三 09 七月 3000
+<abbr class="published" title="2014-07-11T00:00:00">
+        <i class="icon-calendar"></i>周五 11 七月 2014
 </abbr>
 <span class="label">By</span>
 <a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
 <span class="label">Category</span>
-<a href="/category/test_data.html"><i class="icon-folder-open"></i>test_data</a>.
+<a href="/category/pelican.html"><i class="icon-folder-open"></i>Pelican</a>.
 
 
+<span class="label">Tags</span>
+	<a href="/tag/pelican.html"><i class="icon-tag"></i>Pelican</a>
+	<a href="/tag/python.html"><i class="icon-tag"></i>Python</a>
 </footer><!-- /.post-info --></div>
-                <div class="summary"><p>Testeando un poco la cosa</p>
-<p><a href="http://www.example.com">Normal boring link</a>. But this is a <a href="this&gt;">cool link</a> that links to this site.</p>
-<p>Search in <a href="wikipedia_en&gt;python">Wikipedia</a>, (<a href="wikipedia_es&gt;python">here</a> in spanish). Also can <a href="ddg&gt;python">search</a> it.</p>
-                        <a class="btn primary xsmall" href="/plugin-test.html">more ...</a>
+                <div class="summary"><p>一直很想拥有自己搭建的网站，从网上了解到可以用python的框架搭建博客，正巧前段时间学了一下python，于是马上搜索各种网页框架，后来选用了web.py框架，并在网上看了一下Reddit创始人的博客建站视频，了解了下网页基础知识、实现了简单的数据库管理，并在GAE上搭建成功，但登陆GAE需要翻墙，后来为了方便便想迁移到国内，也考虑过SAE和BAE，但由于国内还有域名认证什么的，觉得麻烦便令求它法，后来知道了Pelican这个静态网页生成程序，同时又有Github这个平台可以搭建我的博客，因此决定用Pelican来搭建博客，至于如何使用Pelican和Github搭建博客，网上已经有了许大神们精辟的讲解，现在主要说下在windows下安装和使用Pelican可能会遇到的问题。</p>
+<ul>
+<li>
+<h5>安装Fabric时出现Unable to find vcvarsall.bat错误</h5>
+</li>
+</ul>
+<p>当时试过了在网上找到的很多种方法，可悲的是都不能解决这个问题，经过苦苦的搜索，终于找到了解决的方法：下载安装VS2010后，在python安装目录下找到msvc9compiler.py这个文件，将其中</p>
+<p><code>SET VS90COMNTOOLS=%VS008COMNTOOLS%</code></p>
+<p>这条语句改为</p>
+<p><code>SET VS90COMNTOOLS=%VS100COMNTOOLS%</code>，然后就可以正常安装Fabric。</p>
+<ul>
+<li>
+<h5>删除Pelican生成页面原始的一些用来做example的文章</h5>
+</li>
+</ul>
+<p>只需要在Pelican的pelicanconf.py中添加</p>
+<p><code>PATH='你的博文等要处理的文件所在的文件夹'</code></p>
+<p>这条语句是限定Pelican在生成页面时要处理的文件夹。</p>
+<ul>
+<li>
+<h5>自定义修改主题</h5>
+</li>
+</ul>
+<p>修改主题需要对html ...</p>
+                        <a class="btn primary xsmall" href="/yong-pelicanda-jian-bo-ke-de-yi-xie-wen-ti-ji-jie-jue-fang-fa.html">more ...</a>
+                </div>
+        </div>
+        <hr />
+        <div class="article">
+                <h1><a href="/zui-hou-yi-ge-shu-jia.html">最后一个暑假</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2014-07-09T00:00:00">
+        <i class="icon-calendar"></i>周三 09 七月 2014
+</abbr>
+<span class="label">By</span>
+<a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
+<span class="label">Category</span>
+<a href="/category/ri-zhi.html"><i class="icon-folder-open"></i>日志</a>.
+
+
+<span class="label">Tags</span>
+	<a href="/tag/xin-qing.html"><i class="icon-tag"></i>心情</a>
+</footer><!-- /.post-info --></div>
+                <div class="summary"><p>今天终于考完试了，预示着大学里最后一个暑假来临了，时光匆匆啊，不知不觉大二已经结束，高中的一些同学已经忙于找实习找工作了，他们开始踏入社会，而在不久的将来，我也将像他们一样为工作而奔波，等到那时，也就预示着青涩的青春已经远去，剩下的就是人生充满艰苦的工作生活，这都是人所必须经历的，毕竟人总不能活在襁褓当中，而在那时也许会对人生有不一样的感悟，在成功、失败、痛苦、奋斗中体验人生的酸甜苦辣，走向成熟，此时能够做的只有努力，为毕业后有一个美好的人生而奋斗。正是昭华易逝，青春易老。好好珍惜，不要等到老大徒伤悲。</p>
+                        <a class="btn primary xsmall" href="/zui-hou-yi-ge-shu-jia.html">more ...</a>
                 </div>
         </div>
         <hr />
@@ -140,9 +168,11 @@
 <span class="label">By</span>
 <a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
 <span class="label">Category</span>
-<a href="/category/myblog.html"><i class="icon-folder-open"></i>MyBlog</a>.
+<a href="/category/ri-zhi.html"><i class="icon-folder-open"></i>日志</a>.
 
 
+<span class="label">Tags</span>
+	<a href="/tag/ji-lu.html"><i class="icon-tag"></i>记录</a>
 </footer><!-- /.post-info --></div>
                 <div class="summary"><ul>
 <li>嘿，这是我的第一篇博文</li>
@@ -152,178 +182,75 @@
                 </div>
         </div>
         <hr />
-        <div class="article">
-                <h1><a href="/images-test.html">Images Test</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2013-04-23T15:59:39">
-        <i class="icon-calendar"></i>周二 23 四月 2013
-</abbr>
-<span class="label">By</span>
-<a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
-<span class="label">Category</span>
-<a href="/category/test_data.html"><i class="icon-folder-open"></i>test_data</a>.
 
-
-<span class="label">Tags</span>
-	<a href="/tag/images.html"><i class="icon-tag"></i>images</a>
-	<a href="/tag/test.html"><i class="icon-tag"></i>test</a>
-</footer><!-- /.post-info --></div>
-                <div class="summary"><div class="figure">
-<img alt="" src="/static/images/dummy-800x300.png" />
-<p class="caption">This is the caption of the figure (a simple paragraph).</p>
-<div class="legend">
-The legend consists of all elements after the caption.  In this
-case, the legend consists of this paragraph.</div>
-</div>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad ...</p>
-                        <a class="btn primary xsmall" href="/images-test.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/filename_metadata-example.html">FILENAME_METADATA example</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2012-11-30T00:00:00">
-        <i class="icon-calendar"></i>周五 30 十一月 2012
-</abbr>
-<span class="label">By</span>
-<a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
-<span class="label">Category</span>
-<a href="/category/content.html"><i class="icon-folder-open"></i>content</a>.
-
-
-</footer><!-- /.post-info --></div>
-                <div class="summary"><p>Some cool stuff!</p>
-
-                        <a class="btn primary xsmall" href="/filename_metadata-example.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-        <div class="article">
-                <h1><a href="/second-article-fr.html">Deuxième article</a></h1>
-                <div class="well small"><footer class="post-info">
-<span class="label">Date</span>
-<abbr class="published" title="2012-02-29T00:00:00">
-        <i class="icon-calendar"></i>周三 29 二月 2012
-</abbr>
-<span class="label">By</span>
-<a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
-<span class="label">Category</span>
-<a href="/category/content.html"><i class="icon-folder-open"></i>content</a>.
-
-
-<span class="label">Tags</span>
-	<a href="/tag/foo.html"><i class="icon-tag"></i>foo</a>
-	<a href="/tag/bar.html"><i class="icon-tag"></i>bar</a>
-	<a href="/tag/baz.html"><i class="icon-tag"></i>baz</a>
-<span class="label">Lang</span>
-	<a href="/second-article-en.html"><i class="icon-edit"></i>en</a>
-</footer><!-- /.post-info --></div>
-                <div class="summary"><p>Ceci est un article, en français.</p>
-
-                        <a class="btn primary xsmall" href="/second-article-fr.html">more ...</a>
-                </div>
-        </div>
-        <hr />
-
-        <div class="pagination">
-        <ul>
-                        <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-                        <li class="active"><a href="/author/rong.html">1</a></li>
-                        <li class=""><a href="/author/rong2.html">2</a></li>
-                        <li class="next"><a href="/author/rong2.html">Next &rarr;</a></li>
-        </ul>
-        </div>
-
+                <section id="content" class="body">
+                <h1>Pages</h1>
+                        <li><a href="/pages/about-me.html">About Me</a></li>
+                </section>
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
 <ul class="nav nav-list">
+<li class="nav-header"><h4><i class="icon-search"></i>Google Search</h4></li>
+<div id="cse" style="width: 100%;">Loading</div>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+  google.load('search', '1');
+  google.setOnLoadCallback(function() {
+    var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+      '003517452454333369930:cmdic0ndhom', customSearchOptions);
+    customSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
+    customSearchControl.draw('cse');
+  }, true);
+</script>
+<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
 <li class="nav-header"><h4><i class="icon-external-link"></i>blogroll</h4></li>
     <li><a href="http://getpelican.com/"><i class="icon-external-link"></i>Pelican</a></li>
     <li><a href="http://python.org/"><i class="icon-external-link"></i>Python.org</a></li>
     <li><a href="http://jinja.pocoo.org/"><i class="icon-external-link"></i>Jinja2</a></li>
-<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
-<li><a href="/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
-    <li><a href="http://weibo.cn/"><i class="icon-微博-sign icon-large"></i>微博</a></li>
-    <li><a href="http://user.zone.qq.com/"><i class="icon-QQ空间-sign icon-large"></i>QQ空间</a></li>
 
 <li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>
 <li>
-<a href="/category/bar.html">
-    <i class="icon-folder-open icon-large"></i>bar
+<a href="/category/pelican.html">
+    <i class="icon-folder-open icon-large"></i>Pelican
 </a>
 </li>
 <li>
-<a href="/category/cat1.html">
-    <i class="icon-folder-open icon-large"></i>cat1
-</a>
-</li>
-<li>
-<a href="/category/content.html">
-    <i class="icon-folder-open icon-large"></i>content
-</a>
-</li>
-<li>
-<a href="/category/myblog.html">
-    <i class="icon-folder-open icon-large"></i>MyBlog
-</a>
-</li>
-<li>
-<a href="/category/test_data.html">
-    <i class="icon-folder-open icon-large"></i>test_data
-</a>
-</li>
-<li>
-<a href="/category/yeah.html">
-    <i class="icon-folder-open icon-large"></i>yeah
+<a href="/category/ri-zhi.html">
+    <i class="icon-folder-open icon-large"></i>日志
 </a>
 </li>
 
 <li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
 <li class="tag-4">
-    <a href="/tag/yeah.html">
-        <i class="icon-tag icon-large"></i>yeah
-    </a>
-</li>
-<li class="tag-2">
-    <a href="/tag/foo.html">
-        <i class="icon-tag icon-large"></i>foo
-    </a>
-</li>
-<li class="tag-1">
-    <a href="/tag/bar.html">
-        <i class="icon-tag icon-large"></i>bar
+    <a href="/tag/ji-lu.html">
+        <i class="icon-tag icon-large"></i>记录
     </a>
 </li>
 <li class="tag-4">
-    <a href="/tag/images.html">
-        <i class="icon-tag icon-large"></i>images
+    <a href="/tag/xin-qing.html">
+        <i class="icon-tag icon-large"></i>心情
     </a>
 </li>
 <li class="tag-4">
-    <a href="/tag/baz.html">
-        <i class="icon-tag icon-large"></i>baz
+    <a href="/tag/pelican.html">
+        <i class="icon-tag icon-large"></i>Pelican
     </a>
 </li>
 <li class="tag-4">
-    <a href="/tag/foobar.html">
-        <i class="icon-tag icon-large"></i>foobar
+    <a href="/tag/python.html">
+        <i class="icon-tag icon-large"></i>Python
     </a>
 </li>
-<li class="tag-4">
-    <a href="/tag/oh.html">
-        <i class="icon-tag icon-large"></i>oh
-    </a>
-</li>
-<li class="tag-4">
-    <a href="/tag/test.html">
-        <i class="icon-tag icon-large"></i>test
-    </a>
-</li>
+
+<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
+<li><a href="/" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><a href="https://github.com/xrlin/xrlin.github.io"><i class="icon-github-sign icon-large"></i>github</a></li>
+    <li><a href="http://weibo.com/"><i class="icon-weibo-sign icon-large"></i>weibo</a></li>
+    <li><a href="http://zone.qq.com/"><i class="icon-QQZone-sign icon-large"></i>QQZone</a></li>
+
+
+
 
 
 </ul>        </div><!--/.well -->
@@ -345,9 +272,15 @@ tempor incididunt ut labore et dolore magna aliqua. Ut enim ad ...</p>
     </div><!--/.fluid-container-->
 
 
-<a href="https://github.com/xrlin/xrlin.github.io">
-<img style="position: absolute; top: 10; left: 30; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub" />
-</a>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-52659277-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 
     <!-- Le javascript -->
     <!-- Placed at the end of the document so the pages load faster -->

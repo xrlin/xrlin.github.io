@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Xrlin's Blog</title>
+    <title>用pelican搭建博客的一些问题及解决方法</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="RONG">
@@ -67,7 +67,7 @@
             <ul class="nav">
                 <li><a href="/pages/about-me.html">About Me</a></li>
                           <li class="divider-vertical"></li>
-                  <li >
+                  <li class="active">
                     <a href="/category/pelican.html">
 						<i class="icon-folder-open icon-large"></i>Pelican
 					</a>
@@ -93,16 +93,118 @@
       <div class="row">
         <div class="span9" id="content">
 <section id="content">
-<h1>Archives for Xrlin's Blog</h1>
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to 用pelican搭建博客的一些问题及解决方法">
+                                        用pelican搭建博客的一些问题及解决方法
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2014-07-11T00:00:00">
+        <i class="icon-calendar"></i>周五 11 七月 2014
+</abbr>
+<span class="label">By</span>
+<a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
+<span class="label">Category</span>
+<a href="/category/pelican.html"><i class="icon-folder-open"></i>Pelican</a>.
 
-<dl>
-	<dt>周五 11 七月 2014</dt>
-	<dd><a href='yong-pelicanda-jian-bo-ke-de-yi-xie-wen-ti-ji-jie-jue-fang-fa.html'>用pelican搭建博客的一些问题及解决方法</a></dd>
-	<dt>周三 09 七月 2014</dt>
-	<dd><a href='zui-hou-yi-ge-shu-jia.html'>最后一个暑假</a></dd>
-	<dt>周二 03 六月 2014</dt>
-	<dd><a href='blogger.html'>blogger</a></dd>
-</dl>
+
+<span class="label">Tags</span>
+	<a href="/tag/pelican.html"><i class="icon-tag"></i>Pelican</a>
+	<a href="/tag/python.html"><i class="icon-tag"></i>Python</a>
+</footer><!-- /.post-info -->                </div>
+				<div style="font-family:Microsoft Yahei;">
+                <p>一直很想拥有自己搭建的网站，从网上了解到可以用python的框架搭建博客，正巧前段时间学了一下python，于是马上搜索各种网页框架，后来选用了web.py框架，并在网上看了一下Reddit创始人的博客建站视频，了解了下网页基础知识、实现了简单的数据库管理，并在GAE上搭建成功，但登陆GAE需要翻墙，后来为了方便便想迁移到国内，也考虑过SAE和BAE，但由于国内还有域名认证什么的，觉得麻烦便令求它法，后来知道了Pelican这个静态网页生成程序，同时又有Github这个平台可以搭建我的博客，因此决定用Pelican来搭建博客，至于如何使用Pelican和Github搭建博客，网上已经有了许大神们精辟的讲解，现在主要说下在windows下安装和使用Pelican可能会遇到的问题。</p>
+<ul>
+<li>
+<h5>安装Fabric时出现Unable to find vcvarsall.bat错误</h5>
+</li>
+</ul>
+<p>当时试过了在网上找到的很多种方法，可悲的是都不能解决这个问题，经过苦苦的搜索，终于找到了解决的方法：下载安装VS2010后，在python安装目录下找到msvc9compiler.py这个文件，将其中</p>
+<p><code>SET VS90COMNTOOLS=%VS008COMNTOOLS%</code></p>
+<p>这条语句改为</p>
+<p><code>SET VS90COMNTOOLS=%VS100COMNTOOLS%</code>，然后就可以正常安装Fabric。</p>
+<ul>
+<li>
+<h5>删除Pelican生成页面原始的一些用来做example的文章</h5>
+</li>
+</ul>
+<p>只需要在Pelican的pelicanconf.py中添加</p>
+<p><code>PATH='你的博文等要处理的文件所在的文件夹'</code></p>
+<p>这条语句是限定Pelican在生成页面时要处理的文件夹。</p>
+<ul>
+<li>
+<h5>自定义修改主题</h5>
+</li>
+</ul>
+<p>修改主题需要对html、css、javascript有一定的了解，遇到不懂的语句请自行 <a href="http://www.google.com/ncr">google</a>。现在简单介绍下对bootstrap2主题导航栏的修改。</p>
+<p>要修改导航栏就应该找到base.html这个文件，因为导航栏在所以页面中都有出现，在base.html中我们可以看到</p>
+<p><code>&lt;link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.min.css"</code></p>
+<p><code>&lt;div class="navbar navbar-fixed-top"&gt;</code></p>
+<p><code>&lt;div class="navbar-inner"&gt;</code></p>
+<p><code>&lt;div class="container-fluid"&gt;</code></p>
+<p>由此得知我们可以在bootstrap.min.css文件中找到navbar并修改它的高度、内边距等属性，可以通过修改<code>navbar-inner</code>这个属性进行导航栏高度的设置，在<code>.navbar-inner{}</code>括号内的内容添加</p>
+<p><code>padding-top:25px;padding-bottom:25px;</code></p>
+<p>两个属性，通过设置这两个属性可以修改它的上下的距离，有关css各种属性可以参阅<a href="http://www.w3school.com.cn/cssref/index.asp">W3CSchool</a>.</p>
+<ul>
+<li>
+<h5>为博客添加google站内搜索</h5>
+</li>
+</ul>
+<p>由于pelican的主题原本带有google搜索的代码，因此只需要到<a href="https://www.google.com/cse">google自定义搜索</a>中创建一个搜索并记住搜索ID，然后再pelicanconf.py中添加</p>
+<p><code>GOOGLE_CUSTOM_SEARCH_SIDEBAR='003517452454333369930:cmdic0ndhom'</code></p>
+<p>之后再生成一次网页就可以看到页面中有了google搜索。</p>
+<ul>
+<li>
+<h5>添加多说评论插件</h5>
+</li>
+</ul>
+<p>虽然Pelican原本支持Diaquz评论插件，但对于在国内使用会带来不方便，多说评论插件支持QQ、新浪微博等常用社交账号登陆，给用户提供很大方便，添加多说插件，只需在多说官网中注册好账号并记住多说的ID，在主题的<code>template\artical.html</code>文件中的最后一个endif后添加如下代码：</p>
+<div class="highlight"><pre><span class="c">&lt;!-- Duoshuo Comment BEGIN --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;ds-thread&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+var duoshuoQuery = {short_name:&quot;你的多说ID&quot;};
+(function() {
+    var ds = document.createElement(&#39;script&#39;);
+    ds.type = &#39;text/javascript&#39;;ds.async = true;
+    ds.src = &#39;http://static.duoshuo.com/embed.js&#39;;
+    ds.charset = &#39;UTF-8&#39;;
+    (document.getElementsByTagName(&#39;head&#39;)<span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> 
+    || document.getElementsByTagName(&#39;body&#39;)<span class="cp">[</span><span class="mi">0</span><span class="cp">]</span>).appendChild(ds);
+})();
+<span class="nt">&lt;/script&gt;</span>
+<span class="c">&lt;!-- Duoshuo Comment END --&gt;</span>
+</pre></div>
+
+
+<p>并在pelicanconf.py中添加
+<code>DUOSHUO_SITENAME=u"你的多说ID"</code></p>
+<p>修改完之后，重新执行生成网页，在页面底部便能看到像下面的多说评论框。
+<img alt="评论框" src="/images/pinglun.jpg" /></p>
+				</div>
+                </div><!-- /.entry-content -->
+				<!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"xrlin"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+        </article>
 </section>
         </div><!--/span-->
 

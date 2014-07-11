@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Xrlin's Blog</title>
+    <title>Xrlin's Blog - Pelican</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="RONG">
@@ -92,18 +92,56 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
-<section id="content">
-<h1>Archives for Xrlin's Blog</h1>
+        <div class="article">
+                <h1><a href="/yong-pelicanda-jian-bo-ke-de-yi-xie-wen-ti-ji-jie-jue-fang-fa.html">用pelican搭建博客的一些问题及解决方法</a></h1>
+                <div class="well small"><footer class="post-info">
+<span class="label">Date</span>
+<abbr class="published" title="2014-07-11T00:00:00">
+        <i class="icon-calendar"></i>周五 11 七月 2014
+</abbr>
+<span class="label">By</span>
+<a href="/author/rong.html"><i class="icon-user"></i>RONG</a>
+<span class="label">Category</span>
+<a href="/category/pelican.html"><i class="icon-folder-open"></i>Pelican</a>.
 
-<dl>
-	<dt>周五 11 七月 2014</dt>
-	<dd><a href='yong-pelicanda-jian-bo-ke-de-yi-xie-wen-ti-ji-jie-jue-fang-fa.html'>用pelican搭建博客的一些问题及解决方法</a></dd>
-	<dt>周三 09 七月 2014</dt>
-	<dd><a href='zui-hou-yi-ge-shu-jia.html'>最后一个暑假</a></dd>
-	<dt>周二 03 六月 2014</dt>
-	<dd><a href='blogger.html'>blogger</a></dd>
-</dl>
-</section>
+
+<span class="label">Tags</span>
+	<a href="/tag/pelican.html"><i class="icon-tag"></i>Pelican</a>
+	<a href="/tag/python.html"><i class="icon-tag"></i>Python</a>
+</footer><!-- /.post-info --></div>
+                <div class="summary"><p>一直很想拥有自己搭建的网站，从网上了解到可以用python的框架搭建博客，正巧前段时间学了一下python，于是马上搜索各种网页框架，后来选用了web.py框架，并在网上看了一下Reddit创始人的博客建站视频，了解了下网页基础知识、实现了简单的数据库管理，并在GAE上搭建成功，但登陆GAE需要翻墙，后来为了方便便想迁移到国内，也考虑过SAE和BAE，但由于国内还有域名认证什么的，觉得麻烦便令求它法，后来知道了Pelican这个静态网页生成程序，同时又有Github这个平台可以搭建我的博客，因此决定用Pelican来搭建博客，至于如何使用Pelican和Github搭建博客，网上已经有了许大神们精辟的讲解，现在主要说下在windows下安装和使用Pelican可能会遇到的问题。</p>
+<ul>
+<li>
+<h5>安装Fabric时出现Unable to find vcvarsall.bat错误</h5>
+</li>
+</ul>
+<p>当时试过了在网上找到的很多种方法，可悲的是都不能解决这个问题，经过苦苦的搜索，终于找到了解决的方法：下载安装VS2010后，在python安装目录下找到msvc9compiler.py这个文件，将其中</p>
+<p><code>SET VS90COMNTOOLS=%VS008COMNTOOLS%</code></p>
+<p>这条语句改为</p>
+<p><code>SET VS90COMNTOOLS=%VS100COMNTOOLS%</code>，然后就可以正常安装Fabric。</p>
+<ul>
+<li>
+<h5>删除Pelican生成页面原始的一些用来做example的文章</h5>
+</li>
+</ul>
+<p>只需要在Pelican的pelicanconf.py中添加</p>
+<p><code>PATH='你的博文等要处理的文件所在的文件夹'</code></p>
+<p>这条语句是限定Pelican在生成页面时要处理的文件夹。</p>
+<ul>
+<li>
+<h5>自定义修改主题</h5>
+</li>
+</ul>
+<p>修改主题需要对html ...</p>
+                        <a class="btn primary xsmall" href="/yong-pelicanda-jian-bo-ke-de-yi-xie-wen-ti-ji-jie-jue-fang-fa.html">more ...</a>
+                </div>
+        </div>
+        <hr />
+
+                <section id="content" class="body">
+                <h1>Pages</h1>
+                        <li><a href="/pages/about-me.html">About Me</a></li>
+                </section>
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
