@@ -1,8 +1,8 @@
 ---
-layout:post
-title:Python中的itertools模块
-date:2016-06-03
-tags:["Python","迭代器"]
+layout: post
+title: Python中的itertools模块
+date: 2016-06-03
+tags: ["Python", "迭代器"]
 ---
 
 python提供了itertools模块方便进行迭代器操作，该模块包含了很多迭代器函数，可用各种方式对数据进行循环操作，现在记录下比较常用的功能。

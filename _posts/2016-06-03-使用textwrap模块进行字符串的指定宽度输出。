@@ -1,8 +1,8 @@
 ---
-layout:post
-title:使用textwrap模块进行字符串的指定宽度输出。
-date:2016-06-03
-tags:["Python"]
+layout: post
+title: 使用textwrap模块进行字符串的指定宽度输出。
+date: 2016-06-03
+tags: ["Python"]
 ---
 
 python中的`textwrap`模块给我们提供了很方便以指定列宽重新排版字符串的方法，这在开发CLI程序时可以很方便根据终端大小进行排版输出。如：

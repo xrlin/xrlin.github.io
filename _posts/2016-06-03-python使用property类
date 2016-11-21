@@ -1,8 +1,8 @@
 ---
-layout:post
-title:python使用property类
-date:2016-06-03
-tags:["Python"]
+layout: post
+title: python使用property类
+date: 2016-06-03
+tags: ["Python"]
 ---
 
 property类有setter、getter、deleter方法，其实property类中对__get__、__set__、__delete__等特殊方法进行重写，在这些重写的方法中调用property对象初始化时传入的setter、getter、deleter方法，因此可以利用@property装饰器装饰方法，从而将对应的方法替代对应的__get__、__set__、__delete__等特殊方法的默认实现，从而对访问、赋值、删除等操作进行控制。

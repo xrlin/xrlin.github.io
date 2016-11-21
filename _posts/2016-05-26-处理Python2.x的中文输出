@@ -1,8 +1,8 @@
 ---
-layout:post
-title:处理Python2.x的中文输出
-date:2016-05-26
-tags:
+layout: post
+title: 处理Python2.x的中文输出
+date: 2016-05-26
+tags: 
 ---
 
   python2.x版本的中文编码问题一直令人苦恼，在平常的python程序中经常需要处理各种中文编码字符(gbk、utf-8等编码)，这无疑非常令人苦恼，针对编码问题，一般是使用decode将字符转换成统一的Unicode编码，然后由Unicode编码的字符通过encode方法转换成特定编码的字符。除此之外，在使用print函数输出到终端时，经常会遇到不显示中文而是显示中文对应的unicode数值，这给我们的程序调试带来很大的麻烦，如：

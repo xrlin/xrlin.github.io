@@ -1,8 +1,8 @@
 ---
-layout:post
-title:python进行嵌套列表展开
-date:2016-06-03
-tags:["Python"]
+layout: post
+title: python进行嵌套列表展开
+date: 2016-06-03
+tags: ["Python"]
 ---
 
 python中可以利用迭代高效进行列表的展开，下面的代码就是一个列表展开的例子。

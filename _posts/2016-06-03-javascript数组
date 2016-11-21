@@ -1,8 +1,8 @@
 ---
-layout:post
-title:javascript数组
-date:2016-06-03
-tags:["Javascript"]
+layout: post
+title: javascript数组
+date: 2016-06-03
+tags: ["Javascript"]
 ---
 
 javascript中数组是继承自Array.prototype的一个特殊的对象，数组内的元素是无类型的，可以容纳各种类型的值、对象。

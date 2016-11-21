@@ -1,8 +1,8 @@
 ---
-layout:post
-title:解决python2.x文件读写编码问题
-date:2016-06-12
-tags:["Python"]
+layout: post
+title: 解决python2.x文件读写编码问题
+date: 2016-06-12
+tags: ["Python"]
 ---
 
 python2.X版本在处理中文文件读写时经常会遇到乱码或者是UnicodeError错误，正如下面的程序所示：

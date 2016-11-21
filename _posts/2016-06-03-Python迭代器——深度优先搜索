@@ -1,8 +1,8 @@
 ---
-layout:post
-title:Python迭代器——深度优先搜索
-date:2016-06-03
-tags:["Python","搜索算法"]
+layout: post
+title: Python迭代器——深度优先搜索
+date: 2016-06-03
+tags: ["Python", "搜索算法"]
 ---
 
 要想给类实现迭代器功能，只需在来中实现__iter__(self)方法，利用python的迭代器可以很轻易构造一个可以实现深度优先搜索遍历的树结构。代码如下：

@@ -1,8 +1,8 @@
 ---
-layout:post
-title:python协程
-date:2016-06-03
-tags:["Python","协程"]
+layout: post
+title: python协程
+date: 2016-06-03
+tags: ["Python", "协程"]
 ---
 
 python解释器受制于[GIL](https://wiki.python.org/moin/GlobalInterpreterLock)，导致python的多线程效率不高，不能充分利用CPU的处理能力，但pythoh中存在[协程](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)这种方式弥补多线程的不足，利用协程可以充分利用多核cpu的运算处理能力，大大提高程序的性能，python中有greenlet等一些利用协程的库来提高程序的性能，使用yield关键字也可以实现协程，下面用一个经典的生产者-消费者程序来说明：

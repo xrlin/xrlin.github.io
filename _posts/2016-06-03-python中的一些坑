@@ -1,8 +1,8 @@
 ---
-layout:post
-title:python中的一些坑
-date:2016-06-03
-tags:["Python"]
+layout: post
+title: python中的一些坑
+date: 2016-06-03
+tags: ["Python"]
 ---
 
 python是一门简洁优雅的语言，也是我比较喜欢的编程语言，因其是动态脚本语言，因而使用非常方便，但使用过程中有些坑还是要注意下。
