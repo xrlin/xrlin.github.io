@@ -1,0 +1,33 @@
+---
+layout:post
+title:使用textwrap模块进行字符串的指定宽度输出。
+date:2016-06-03
+tags:["Python"]
+---
+
+python中的`textwrap`模块给我们提供了很方便以指定列宽重新排版字符串的方法，这在开发CLI程序时可以很方便根据终端大小进行排版输出。如：
+
+```python
+import os
+import textwrap
+
+s = """
+She had been shopping with her Mom in Wal-Mart. She must have been 6 years old, this beautiful brown haired, freckle-faced image of innocence. It was pouring outside. The kind of rain that gushes over the top of rain gutters, so much in a hurry to hit the Earth, it has no time to flow down the spout.
+"""
+width = os.get_terminal_size().columns # 获取终端列宽
+print(textwrap.fill(s, width)) # 根据终端大小进行输出， textwrap.fill相当于'\n'.join(textwrap.wrap(s,wdth))
+
+```
+同时`textwrap`还提供了`shorten`这个很常用的函数给我们进行对大段文本的省略输出。
+
+```python
+import textwrap
+textwrap.shorten("Hello  world!", width=12) #'Hello world!'
+textwrap.shorten("Hello  world!", width=11) #'Hello [...]'
+textwrap.shorten("Hello world", width=10, placeholder="...") #'Hello...'
+```
+在网站制作时经常需要在首页显示文章的摘要，而省略后面的内容，这时`textwrap`这个函数与就很有用了。  
+textwrap还提供了`dedent(text)`和`indent(text, prefix, predicate=Node)`两个方法进行字符串行首缩进的去除和添加，需要注意的是使用`dedent`时`\t`和`space`是不想等的，在使用indent时`prefix`前缀字符不会添加到行末符号或者连续的空字符，要想实现在空行前也添加指定的前缀，可以提供`predicate`参数，如：
+
+```python
+indent(text, prefix, predicate=lambda line: True)

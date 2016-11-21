@@ -1,0 +1,42 @@
+---
+layout:post
+title:Python迭代器——深度优先搜索
+date:2016-06-03
+tags:["Python","搜索算法"]
+---
+
+要想给类实现迭代器功能，只需在来中实现__iter__(self)方法，利用python的迭代器可以很轻易构造一个可以实现深度优先搜索遍历的树结构。代码如下：
+
+```python
+class Node(object):
+    def __init__(self, value):
+        self.value = value;
+        self._children = []
+
+    def add_child(self, node):
+        self._children.append(node)
+
+    def __iter__(self):
+        return iter(self._children)    # 使用iter调用list的__iter__方法，返回一个迭代器对象
+
+    def depth_first(self):
+        yield self    # 先把当前node返回
+        for child in self._children:
+            yield from child.depth_first()  # 调用子类的depth_first()方法，并依次返回子元素
+    
+    def __repr__(self):
+        # 格式化输出
+        return 'Node({!r})'.format(self.value)
+
+root = Node(0)
+c1 = Node(1)
+c2 = Node(2)
+root.add_child(c1)
+root.add_child(c2)
+c1.add_child(Node(3))
+c2.add_child(Node(4))
+for c in root.depth_first():
+    print(c, end=" ")
+# 输出:
+# Node(0) Node(1) Node(3) Node(2) Node(4)
+```

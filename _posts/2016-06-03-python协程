@@ -1,0 +1,49 @@
+---
+layout:post
+title:python协程
+date:2016-06-03
+tags:["Python","协程"]
+---
+
+python解释器受制于[GIL](https://wiki.python.org/moin/GlobalInterpreterLock)，导致python的多线程效率不高，不能充分利用CPU的处理能力，但pythoh中存在[协程](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)这种方式弥补多线程的不足，利用协程可以充分利用多核cpu的运算处理能力，大大提高程序的性能，python中有greenlet等一些利用协程的库来提高程序的性能，使用yield关键字也可以实现协程，下面用一个经典的生产者-消费者程序来说明：
+
+```python
+#! /usr/bin/python
+import random
+
+def consumer():
+    while True:
+        recv = yield   # 等待获取数据
+        print('consumer consumes ' + str(recv))
+        
+def producer(c):
+    c.send(None)  # 使用send(None)激活consumer
+    while True:
+        data = random.randint(0, 10)
+        print('producer produces '+ str(data))
+        c.send(data)        # 发送数据给c
+        
+c = consumer()
+p = producer(c)
+
+"""
+output:
+
+consumer consumes 0
+producer produces 9
+consumer consumes 9
+producer produces 9
+consumer consumes 9
+producer produces 0
+consumer consumes 0
+producer produces 9
+consumer consumes 9
+producer produces 4
+consumer consumes 4
+producer produces 9
+consumer consumes 9
+....
+"""
+```
+
+从运行结果可以看出，consumer和producer是交替运行的，在函数执行到yield语句的时候，函数中断，另一函数得以执行，通过send()方法给另一函数传送数据，从而实现模拟多线程的操作，而且不用担心线程锁的问题。

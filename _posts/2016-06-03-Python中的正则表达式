@@ -1,0 +1,52 @@
+---
+layout:post
+title:Python中的正则表达式
+date:2016-06-03
+tags:["Python","正则表达式"]
+---
+
+python中的`re`模块提供了与Prel语言中正则表达式类似的方法，`re`模块提供了强大的字符串匹配功能，符合正则表达式标准，可以使用在其它编程语言中。
+
+### 一、正则表达式语法
+
+* `\` ：反斜线在正则表达式中可以当作转义字符，如在正则匹配中想匹配`(`可以这样写`\(`，因为正则表达式中`(`是一个标准语法，`()`代表一个分组，如果想要匹配`\`可以写成`\\\\`或者`r'\\'`。
+* `(...)`：(...)代表一个捕获分组，进行匹配后可以通过返回的match对象的group(index)方法获取指定分组匹配到的内容。
+* `(?:..)`：非捕获分组，不捕获该分组，即在匹配后不存进group中。
+* `(?aiLmsux)`：设定匹配时是否忽略大小写等，如`i`标识忽略大小写进行匹配。
+* `(?P<name>...)`：给分组一个名称name，在匹配时可以通过`(?P=name)调用指定分组。
+* `\number`：获取序号为number的分组，如`\1`表示第一个捕获分组。
+* `[...]`，匹配[...]中的任意一个字符。
+* `*`：匹配0个或一个以上，非贪婪匹配可以使用`*?`。
+* `+`：匹配一个以上
+* `{m,n}`, 匹配最少m个，最多n个字符。
+* `A|B`：匹配符合正则A或者正则B的内容。
+* `(?#...)`：注释
+* `(?=...)`：在下一段字符匹配`...`时才匹配成功，如`Isaac (?!Asimov)`只有在`Isaac`后又`Asimov`时才匹配成功。
+* `(?<=...)`：匹配前缀被`...`匹配的字符。如:
+
+```python
+ import re
+ m = re.search('(?<=abc)def', 'abcdef')
+m.group(0)
+'def'
+```
+
+### 二、re模块常用匹配操作
+* `re.compile`：re.compile可以预编译一个匹配模式，方便重复使用该模式。
+*`re.match`：匹配一个字符串的开头，在multiline模式中只匹配开头并不匹配每行开头，这也是它与`re.search`的区别。
+* `re.search`：依次查找整个字符串以进行匹配。
+* `re.split(pattern, string, maxsplit=0, flags=0)`：根据给定pattern分割字符串，在python3.5中尝试只进行空匹配会触发ValueError异常。
+
+```python
+
+re.split('\W+', 'Words, words, words.')
+['Words', 'words', 'words', '']
+re.split('(\W+)', 'Words, words, words.')
+['Words', ', ', 'words', ', ', 'words', '.', '']
+ re.split('\W+', 'Words, words, words.', 1)
+['Words', 'words, words.']
+ re.split('[a-f]+', '0a3B9', flags=re.IGNORECASE)
+['0', '3', '9']
+```
+* `re.sub(pattern, repl, string, count=0, flags=0)`：进行字符串替换，将string中匹配pattern的字符内容以repl的模式进行替换。
+

@@ -1,0 +1,34 @@
+---
+layout:post
+title:python进行嵌套列表展开
+date:2016-06-03
+tags:["Python"]
+---
+
+python中可以利用迭代高效进行列表的展开，下面的代码就是一个列表展开的例子。
+
+```python
+from collections import Iterable
+def flat(a):
+    for i in a:
+        if isinstance(i, Iterable):  # 判断元素是否可迭代，即还有嵌套
+            yield from flat(i)
+        else:
+             yield i
+
+a = [1, 2, 3 ,4, [5, 6, 7]]
+for i in flat(a):
+    print(i)
+
+"""
+output:
+1
+2
+3
+4
+5
+6
+7
+从输出可以看出，列表嵌套已经展开
+"""
+```

@@ -1,0 +1,26 @@
+---
+layout:post
+title:处理Python2.x的中文输出
+date:2016-05-26
+tags:
+---
+
+  python2.x版本的中文编码问题一直令人苦恼，在平常的python程序中经常需要处理各种中文编码字符(gbk、utf-8等编码)，这无疑非常令人苦恼，针对编码问题，一般是使用decode将字符转换成统一的Unicode编码，然后由Unicode编码的字符通过encode方法转换成特定编码的字符。除此之外，在使用print函数输出到终端时，经常会遇到不显示中文而是显示中文对应的unicode数值，这给我们的程序调试带来很大的麻烦，如：
+
+    >>>print '中文'
+    中文    # 此时显示正常
+    >>>print u'中文'
+    中文    # 此时显示正常
+    >>>print [u'中文']
+    [u'\ue2d\u6587']  # 不显示中文
+  print函数在单独输出中文字符时能够正常在终端显示，但输出包含在对象中（如列表、字典等）的字符时不能正常显示中文，因此我们需要自己实现一个函数`zhprint`对print函数进行修正，函数实现如下:
+
+```python
+def zhprint(obj):
+    import re
+    # 将unicode数值替换成对应的unicode字符
+    print re.sub(r"\\u([a-f0-9]{4})", lambda mg:unichr(int(mg.group(1), 16), obj.__repr__())
+
+zhprint [u'中文']  # output: [u'中文']
+```
+  为了使用方便，我们也可以通过`print=zhprint`语句用`zhprint`函数替换原来的`print`函数，以后就可以直接使用`print`函数而不会出现中文输出异常的问题。

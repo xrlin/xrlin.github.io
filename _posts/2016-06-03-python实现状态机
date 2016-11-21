@@ -1,0 +1,120 @@
+---
+layout:post
+title:python实现状态机
+date:2016-06-03
+tags:["Python","状态机"]
+---
+
+(python-cookbook阅读笔记)  
+当你要实现一个需要进行状态转换对象，比如实现一个管理连接读写的Connection对象，一般我们会使用if进行对象状态判断，如下：
+
+```python
+class Connection:
+    """普通方案，好多个判断语句，效率低下~~"""
+
+    def __init__(self):
+        self.state = 'CLOSED'
+
+    def read(self):
+        if self.state != 'OPEN':
+            raise RuntimeError('Not open')
+        print('reading')
+
+    def write(self, data):
+        if self.state != 'OPEN':
+            raise RuntimeError('Not open')
+        print('writing')
+
+    def open(self):
+        if self.state == 'OPEN':
+            raise RuntimeError('Already open')
+        self.state = 'OPEN'
+
+    def close(self):
+        if self.state == 'CLOSED':
+            raise RuntimeError('Already closed')
+        self.state = 'CLOSED'
+```
+上面的代码使用了多条if语句，显得啰嗦繁杂，下面是使用状态机模式实现的一种方案。
+
+```python
+class Connection(object):
+    def __init__(self):
+        self._new_state(ClosedState)
+    def _new_state(self, stat):
+        self._stat = stat
+        
+    def open(self):
+        self._stat.open(self)
+    def close(self):
+        self._stat.close(self)
+    def read(self):
+        self._stat.read(self)
+    def write(self):
+        self._stat.write(self)
+
+
+class ConnectionState:
+    """
+    该类看作一个抽象类，不能直接调用定义的方法
+    """
+    @staticmethod
+    def read(conn):
+        raise NotImplementedError()
+
+    @staticmethod
+    def write(conn, data):
+        raise NotImplementedError()
+
+    @staticmethod
+    def open(conn):
+        raise NotImplementedError()
+
+    @staticmethod
+    def close(conn):
+        raise NotImplementedError()
+
+class ClosedState(ConnectionState):
+    """
+    继承ConnectionState并实现其中方法
+    """
+    @staticmethod
+    def read(conn):
+        raise RuntimeError('Not open')
+
+    @staticmethod
+    def write(conn, data):
+        raise RuntimeError('Not open')
+
+    @staticmethod
+    def open(conn):
+        conn._new_state(OpenedState)  # 改变状态
+
+    @staticmethod
+    def close(conn):
+        raise RuntimeError('Already closed')
+
+class OpenedState(ConnectionState):
+    @staticmethod
+    def read(conn):
+        print('reading')
+
+    @staticmethod
+    def write(conn, data):
+        print('writing')
+
+    @staticmethod
+    def open(conn):
+        raise RuntimeError('Already open')
+
+    @staticmethod
+    def close(conn):
+        conn._new_state(ClosedState)
+
+# test
+>>>c = Connection()
+>>>c.read() # RuntimeError: Not open
+>>>c.open()
+>>>c.read() # reading
+>>>c.close()
+```
