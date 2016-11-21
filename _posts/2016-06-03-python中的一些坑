@@ -1,0 +1,39 @@
+---
+layout: post
+title: "Post with Image Feature"
+date: 2012-05-23
+tags: ["Python"]
+feature: http://i.imgur.com/Ds6S7lJ.png
+---
+
+python是一门简洁优雅的语言，也是我比较喜欢的编程语言，因其是动态脚本语言，因而使用非常方便，但使用过程中有些坑还是要注意下。
+
+1、变量定义查找 一般我们认为在函数外部定义全局变量，然后在函数内部可以进行调用、修改是很正常的事，但是在python中如果你像下面这样编写代码：
+```python
+x = 1
+
+def test():
+    x = x +1
+    print(x)
+
+# 引发异常
+#UnboundLocalVariable：local variable 'x' referenct before assignment
+```
+这是因为python解释器在运行程序时，对变量定义的查找遵循LGB（local->global->built-in)原则，即先在区块作用域内进行查找，若查找不到则在全局作用域中查找，若还是查找不到对应变量定义则在built-in中查找，因此test()函数运行时，因为x在local中定义了，而x=x+1中使用了x这个变量，但此时使用的x是local中x变量，但local中的x变量还未进行赋值，所以会触发UnboundLocalVariable异常。
+
+2、也许你会喜欢在python中lambda表达式，但python中的lambda表达式有一个坑必须注意下。
+```python
+#当想得到一个包含x*1 x*2 x*3 x*3的函数时，为了方便也许你会使用lambda表达式
+func_lst = [ lambda x : x*i for i in range(5)] 
+# 但当你遍历调用生成的函数时
+for func in func_lst:
+    print(func(2))
+"""out：8
+          8
+          8
+     . ........
+你会发现输出都为8，懵逼了吧！！！这是因为python的lambda表达式中在遍历时只会保留最后一次的`i`的值，导致生成的函数实际做的的就是将参数`x`乘以4。
+"""
+#为了避免这个坑，又想使用lambda这个方便的东西，我们可以按照下面的使用方法
+func_lst = [lambda x, i=i: x*i for i in range(5)]
+```
