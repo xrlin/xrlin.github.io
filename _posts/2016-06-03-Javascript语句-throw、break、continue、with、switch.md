@@ -2,7 +2,7 @@
 layout: post
 title: Javascript语句-throw、break、continue、with、switch
 date: 2016-06-03
-tags: ["Javascript"]
+tags: [Javascript]
 ---
 
 ## throw语句及异常捕捉机制

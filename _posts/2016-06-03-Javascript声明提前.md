@@ -2,7 +2,7 @@
 layout: post
 title: Javascript声明提前
 date: 2016-06-03
-tags: ["Javascript"]
+tags: [Javascript]
 ---
 
 ### 变量声明提前  

@@ -2,7 +2,7 @@
 layout: post
 title: javascript——对象
 date: 2016-06-03
-tags: ["Javascript"]
+tags: [Javascript]
 ---
 
 javascript中对象是一种基本的数据类型，也是一种复合值，将很多对象结合在一起，通过名称进行访问，对象中的属性还有一些相关的值，称为属性特性。其包含：
