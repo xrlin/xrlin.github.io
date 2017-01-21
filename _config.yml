@@ -5,7 +5,7 @@ description:        "A blog for sharing my thoughts and knowledge"
 reading_time:       true
 words_per_minute:   200
 logo:               'assets/img/logo.png'
-background:         'assets/img/background.jpg'
+background:         'assets/img/crown-logo.jpg'
 tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
 locale:             zh_CN
 url:                https://xrlin.github.io
