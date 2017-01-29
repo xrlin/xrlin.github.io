@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 在WSL(Bash On Windows)中运行jekyll小记
-date: 2016-1-29
+date: 2017-1-29
 tags: [jekyll]
 ---
 
