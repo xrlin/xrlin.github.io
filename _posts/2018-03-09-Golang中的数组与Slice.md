@@ -101,7 +101,7 @@ tags: [linux shell awk grep]
         a := [10]int{1,2,3,4,5,6,7,8,9,10}
         s := a[2:5]
         // a成为s的底层数组，ZerothElement指向a[2]，a[2]之后长度为8，即s的容量为8
-        fmt.Println(s, len(s), cap(s)) // [3 4 5] 3 8
+        fmt.Println(s, len(s), cap(s)) // [3 4 5] 3 8
         a[2] = 21
         fmt.Println(s) // [21, 4, 5]
         s := append(s, 22)
