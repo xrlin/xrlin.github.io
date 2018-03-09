@@ -61,9 +61,9 @@ tags: [linux shell awk grep]
         fmt.Println(a)  // [1 0 0 0 0 0 0 0 0 0]
         ```
 
-*   Slice（切片)
-    1.  定义及初始化
-        slice在go中是常用的数据结构，在go中它经常用来代替数组进行使用，对于写过python的人来说，slice这词应该不陌生，python中的slice经常用于截取一部分数组、字符串生成新的一个对象，但在go中它实际上是数组一部分范围的表示。因为slice可以使用append函数进行扩充，slice的初始化与数组类似。
+*   Slice（切片）
+    1.  定义及初始化
+        slice在go中是常用的数据结构，在go中它经常用来代替数组进行使用，对于写过python的人来说，slice这词应该不陌生，python中的slice经常用于截取一部分数组、字符串生成新的一个对象，但在go中它实际上是数组一部分范围的表示。因为slice可以使用append函数进行扩充，slice的初始化与数组类似。 
         ```go
         // 初始化长度为0的空slice
         var a []int
@@ -101,7 +101,7 @@ tags: [linux shell awk grep]
         a := [10]int{1,2,3,4,5,6,7,8,9,10}
         s := a[2:5]
         // a成为s的底层数组，ZerothElement指向a[2]，a[2]之后长度为8，即s的容量为8
-        fmt.Println(s， len(s), cap(s)) // [3 4 5] 3 8
+        fmt.Println(s, len(s), cap(s)) // [3 4 5] 3 8
         a[2] = 21
         fmt.Println(s) // [21, 4, 5]
         s := append(s, 22)
@@ -124,7 +124,7 @@ tags: [linux shell awk grep]
 
         // 对数组a的操作不会影响到s
         a[2] = 3333
-        fmt.Println(a)  // [1 2 3333 4 23 22 1 2 3 4]
+        fmt.Println(a) // [1 2 3333 4 23 22 1 2 3 4]
         fmt.Println(s) // [21 4 23 22 1 2 3 4 33]
 
         // 对s的操作不会影响到a
