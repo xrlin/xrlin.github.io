@@ -1,6 +1,6 @@
 ---
 title: Golang中的数组与slice
-date: 2017-12-24
+date: 2018-03-09
 layout: post
 tags: [go]
 ---
