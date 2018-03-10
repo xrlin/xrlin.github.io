@@ -2,7 +2,7 @@
 title: Golang中的数组与slice
 date: 2017-12-24
 layout: post
-tags: [linux shell awk grep]
+tags: [go]
 ---
 
 *   数组
