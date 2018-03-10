@@ -1,0 +1,102 @@
+---
+title: Golang中的方法（method）
+date: 2017-03-10
+layout: post
+tags: [go]
+---
+
+Golang中的方法（method）只是带有接收者（receiver）的函数（functino），通过为类型定义方法，可以实现oop编程模式。
+
+```go
+pacakge main
+import "fmt"
+
+type MyType struct {
+  Val int
+}
+
+func (m MyType) PrintVal() {
+  fmt.Println(m.Val)
+}
+
+func (m MyType) SetVal(val int) {
+  m.Val = val
+}
+
+// 定义一个以指针作为接收者的方法
+func (m *MyType) SetValWitPointerReceiver(val int) {
+  m.Val = val
+}
+```
+
+在定义`MyType`类型及其方法后，便可以使用类似C++、Java、Python等面向对象语言的`.`操作符调用相应的方法，需要注意的是如果调用方法对值进行修改，方法的接收者必须是指针类型，否则在方法内的更改不会影响到调用者，这与function的规则是一致的，因为method也是function，只是golang提供了一个方便调用的语法，自动将调用者作为function的第一个参数传递。
+
+```go
+func main() {
+  m := MyType{10}
+  m.PrintVal() // 10
+  m.SetVal(20)
+  fmt.Println(m.Val) // 10 调用SetVal后m的Val值没有改变，因为SetVal调用时方法内的m是一个完整的拷贝
+  (&m).SetValWitPointerReceiver(20)
+  fmt.Println(m.Val) // 20 SetValWitPointerReceiver方法的接收者为指针，对指针的操作会影响到调用者本身
+}
+```
+
+### 注意事项
+
+1.  为类型添加方法只允许在定义类型的包作用域内进行，或者给在当前package外定义的类型设置一个别名再为别名添加方法，否则会引发编译器错误。
+
+```go
+
+// 引发编译器异常: cannot define new methods on non-local type int
+func (i int) Fail() {
+  fmt.Println("failed")
+}
+
+// 将int用别名代替(新类型)
+type CInt int
+
+func (c CInt) Success() {
+  fmt.Println("success")
+ }
+ 
+func main() {
+  var i int;
+  c := CInt(i)
+  c.Success() // success
+}
+```
+
+2.  go中会对receiver进行必要的自动转换，但这种转换是有限制的，以`MyType`为例，如果调用者是`*MyType`， 那么在调用`PrintVal`方法时会自动转换为`MyType`类型进行方法调用，但如果调用者是`MyType`类型，它不能调用`SetValWitPointerReceiver`方法，因为SetValWitPointerReceiver方法的接收者`*MyType`类型，go不会自动将`MyType`类型转换为`*MyType`类型。这是因为当method的receiver是指针类型时，很有可能调用该方法会影响到调用者的值，当reciever不是指针类型时，在method里的语句执行后不会影响到调用者（slice、map等类型除外），因为自动转为指针类型进行调用可以认为是安全的。
+
+```go
+var i MyType
+// 触发编译异常
+i.SetValWitPointerReceiver(20)
+```
+
+同时上述限制也会应用到interface上
+
+```go
+package main
+import "fmt"
+
+type Methods interface {
+  Bark()
+}
+
+type M struct {}
+
+func (m *M) Bark() {
+  fmt.Println("bark")
+}
+
+func main() {
+  var i Methods
+  var m M
+  i = &m
+  // compile error: cannot use m (type M) as type Methods in assignment:
+  //M does not implement Methods (Bark method has pointer receiver)
+  i = m
+}
+```
