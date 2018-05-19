@@ -85,13 +85,49 @@ func recover() interface{} // 捕获异常并处理
 3. 当前goroutine没有panic，即是说不是当前goroutine引发的panic不会被defer和defer中的recover捕获和处理。
 
 ```go
+package main
 
+import (
+	"fmt"
+)
+
+var sem chan int = make(chan int)
+
+func main() {
+	defer func() {
+		if e := recover(); e != nil {
+			fmt.Printf("Catch panic: %v\n", e)
+		}
+	}()
+	go t()
+	<-sem
+	fmt.Println("done")
+}
+
+// t is just a test method
+// No recover used in this function, so a panic will throw and cause the top function panic and stop
+func t() {
+	defer func() {
+		sem <- 1
+	}()
+	panic("I'm panic")
+}
+/** output
+ panic不能被main中的defer捕获并处理，导致main也因为panic退出，所以最后的done没有打印出来
+panic: I'm panic
+
+goroutine 5 [running]:
+main.t()
+	/tmp/sandbox093977267/main.go:26 +0x60
+created by main.main
+	/tmp/sandbox093977267/main.go:15 +0x60
+ **/
 ```
 
 注意:
 
 1. 在panic火runtime error触发后，如果当前的异常没有被处理，或者是在`recover()`后继续抛出异常，异常会一直在当前的goroutine中向上
-传递，直到被处理或直接因为异常终止。
+传递，直到被defer方法调用处理或因为在当前goroutine中没法被处理，导致顶层的goroutine因为panic退出（注意顶层的goutine并不能通过recover捕获处理该panic，但panic会导致顶层调用退出)。
 
 2. 即使使用`recover`捕获异常并正常处理，原有的代码执行已经终止，在panic或异常触发后的代码都不会被执行，但后续的defer方法还会被调用。
 
