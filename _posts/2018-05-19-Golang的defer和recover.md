@@ -17,7 +17,7 @@ with open('/etc/passwd', 'r') as f:
 
 Python的with实现很直观、方便，Golang中提供了defer、recover用来实现类似的功能。
 
-* defer
+### defer
 
 defer语句会在方法执行完毕前、return之前、或者对应的goroutine时panic时调用defer后面的方法。
 
@@ -65,7 +65,7 @@ unsafe.Alignof unsafe.Offsetof unsafe.Sizeof`方法。
 
 5. defer只会在当前的goroutine中调用。
 
-* recover
+### recover
 
 go中定义了两个方法
 
