@@ -24,39 +24,39 @@ defer语句会在方法执行完毕前、return之前、或者对应的goroutine
 约束:
 
 1. defer只能用在方法、函数内。
-错误示例:
+    错误示例:
 
-```go
-package main
+    ```go
+    package main
 
-import (
-	"fmt"
-)
+    import (
+        "fmt"
+    )
 
-defer func test() {}() // prog.go:6:1: syntax error: non-declaration statement outside function body
+    defer func test() {}() // prog.go:6:1: syntax error: non-declaration statement outside function body
 
-func main() {
-	fmt.Println(t())
-}
+    func main() {
+        fmt.Println(t())
+    }
 
-func t() int{
-i:=0
-	defer func (){}()
-	return i
-}
-```
+    func t() int{
+    i:=0
+        defer func (){}()
+        return i
+    }
+    ```
 
 2. defer后的表达式必须是function获取method的调用。
 
-错误示例:
+    错误示例:
 
-```go
-func t() int{
-i:=0
-	defer i++ // prog.go:14:10: expression in defer must be function call
-	return i
-}
-```
+    ```go
+    func t() int{
+    i:=0
+        defer i++ // prog.go:14:10: expression in defer must be function call
+        return i
+    }
+    ```
 
 3. defer会忽略方法调用的返回值, defer调用内置方法时需要遵守expression statement规范，defer后不能调用`append cap complex imag len make new real
 unsafe.Alignof unsafe.Offsetof unsafe.Sizeof`方法。
@@ -133,42 +133,42 @@ created by main.main
 
 如下所示:
 
-```go
-package main
+    ```go
+    package main
 
-import (
-	"fmt"
-)
+    import (
+        "fmt"
+    )
 
-func main() {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("Catch panic from f1: %v\n", r)
-		}
-	}()
-	f1()
-}
+    func main() {
+        defer func() {
+            if r := recover(); r != nil {
+                fmt.Printf("Catch panic from f1: %v\n", r)
+            }
+        }()
+        f1()
+    }
 
-func f1() {
-	defer func() {
-		fmt.Println("last defer")
-	}()
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Printf("Catch panic in f1: %v\n", r)
-			fmt.Println("Will repanic")
-			panic(r)
-		}
-	}()
-  defer recover() // 不能捕捉到异常
-	panic("oops")
-}
+    func f1() {
+        defer func() {
+            fmt.Println("last defer")
+        }()
+        defer func() {
+            if r := recover(); r != nil {
+                fmt.Printf("Catch panic in f1: %v\n", r)
+                fmt.Println("Will repanic")
+                panic(r)
+            }
+        }()
+      defer recover() // 不能捕捉到异常
+        panic("oops")
+    }
 
-/** output
-Catch panic in f1: oops
-Will repanic
-last defer
-Catch panic from f1: oops
-**/
-```
+    /** output
+    Catch panic in f1: oops
+    Will repanic
+    last defer
+    Catch panic from f1: oops
+    **/
+    ```
 
