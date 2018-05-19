@@ -169,6 +169,6 @@ Catch panic in f1: oops
 Will repanic
 last defer
 Catch panic from f1: oops
-**>
+**/
 ```
 
