@@ -172,7 +172,7 @@ created by main.main
     Catch panic from f1: oops
     **/
     ```
-    
+
 ### 源码分析
 
 先来看看`recover`的源码，`recover`的具体实现在`runtime`包中:
@@ -213,7 +213,7 @@ func gorecover(argp uintptr) interface{} {
  ```go
 // runtine/panic.go
 
-/ The implementation of the predeclared function panic.
+// The implementation of the predeclared function panic.
 func gopanic(e interface{}) {
 	gp := getg()
 	// ...
@@ -228,7 +228,7 @@ func gopanic(e interface{}) {
         
         gp._defer = d.link
         
-        // ...
+        // ...
         
 		pc := d.pc
 		sp := unsafe.Pointer(d.sp) // must be pointer so it gets adjusted during stack copy
