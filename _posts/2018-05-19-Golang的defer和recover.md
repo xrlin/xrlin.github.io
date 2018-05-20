@@ -131,7 +131,7 @@ created by main.main
 
 2. 即使使用`recover`捕获异常并正常处理，原有的代码执行已经终止，在panic或异常触发后的代码都不会被执行，但后续的defer方法还会被调用。
 
-如下所示:
+    如下所示:
 
     ```go
     package main
@@ -160,7 +160,8 @@ created by main.main
                 panic(r)
             }
         }()
-      defer recover() // 不能捕捉到异常
+        // 不能捕捉到异常
+        defer recover()
         panic("oops")
     }
 
@@ -171,4 +172,171 @@ created by main.main
     Catch panic from f1: oops
     **/
     ```
+    
+### 源码分析
+
+先来看看`recover`的源码，`recover`的具体实现在`runtime`包中:
+
+```go
+// runtine/panic.go
+
+// The implementation of the predeclared function recover.
+// Cannot split the stack because it needs to reliably
+// find the stack segment of its caller.
+//
+// TODO(rsc): Once we commit to CopyStackAlways,
+// this doesn't need to be nosplit.
+//go:nosplit
+func gorecover(argp uintptr) interface{} {
+	// Must be in a function running as part of a deferred call during the panic.
+	// Must be called from the topmost function of the call
+	// (the function used in the defer statement).
+	// p.argp is the argument pointer of that topmost deferred function call.
+	// Compare against argp reported by caller.
+	// If they match, the caller is the one who can recover.
+	gp := getg()
+	p := gp._panic
+	if p != nil && !p.recovered && argp == uintptr(p.argp) {
+		p.recovered = true
+		return p.arg
+	}
+	return nil
+}
+```
+
+通过`getg()`获取当前的`goroutine`，并获取当前的`_panic`信息，如果当前goroutine存在panic并且没有被标记为recovered，则将该panic标志为recovered并返回panic的参数。
+ 
+ 从代码中看到recover()只将当前goroutine的panic标记为recovered并返回panic的参数，但是并没有看到相关的代码跳转、函数调用。
+ 
+ 这时可以看下panic的实现，panic也是在runtime包中实现。
+ 
+ ```go
+// runtine/panic.go
+
+/ The implementation of the predeclared function panic.
+func gopanic(e interface{}) {
+	gp := getg()
+	// ...
+
+	for {
+		d := gp._defer
+		if d == nil {
+			break
+		}
+
+		// ...
+        
+        gp._defer = d.link
+        
+        // ...
+        
+		pc := d.pc
+		sp := unsafe.Pointer(d.sp) // must be pointer so it gets adjusted during stack copy
+		freedefer(d)
+		if p.recovered {
+			atomic.Xadd(&runningPanicDefers, -1)
+
+			gp._panic = p.link
+            
+            // ...
+            
+			// Pass information about recovering frame to recovery.
+			gp.sigcode0 = uintptr(sp)
+			gp.sigcode1 = pc
+			mcall(recovery)
+			throw("recovery failed") // mcall should not return
+		}
+	}
+
+	// ...
+}
+ ```
+ 
+ 在调用panic时，会遍历当前goroutine中的_defer链表，直到deferred执行完毕，如果当前goroutine的panic被标记为recovered，则将当前goroutine的_panic指向上一个panic（gp._panic = p.link），通过`mcall(recovery)`记录下当前的pc，sp信息、进入defer上下文执行defer，通过recovery使得方法正常返回（移除该panic）。
+ 
+ 现在来看下`defer`的实现
+ 
+ ```go
+ // runtime/panic.go
+ 
+ 
+
+// Create a new deferred function fn with siz bytes of arguments.
+// The compiler turns a defer statement into a call to this.
+//go:nosplit
+func deferproc(siz int32, fn *funcval) { // arguments of fn follow fn
+	if getg().m.curg != getg() {
+		// go code on the system stack can't defer
+		throw("defer on system stack")
+	}
+
+	// the arguments of fn are in a perilous state. The stack map
+	// for deferproc does not describe them. So we can't let garbage
+	// collection or stack copying trigger until we've copied them out
+	// to somewhere safe. The memmove below does that.
+	// Until the copy completes, we can only call nosplit routines.
+	sp := getcallersp()
+	argp := uintptr(unsafe.Pointer(&fn)) + unsafe.Sizeof(fn)
+	callerpc := getcallerpc()
+
+	d := newdefer(siz)
+	if d._panic != nil {
+		throw("deferproc: d.panic != nil after newdefer")
+	}
+	d.fn = fn
+	d.pc = callerpc
+	d.sp = sp
+    
+	// ...
+
+	// deferproc returns 0 normally.
+	// a deferred func that stops a panic
+	// makes the deferproc return 1.
+	// the code the compiler generates always
+	// checks the return value and jumps to the
+	// end of the function if deferproc returns != 0.
+	return0()
+	// No code can go here - the C return register has
+	// been set and must not be clobbered.
+}
+ ```
+ 
+ `defer`关键字通过调用`deferproc`往goroutine的defer链中添加defer调用，`return0()`会调用`deferreturn`，正常情况下`deferproc`会返回0，如果在`deferproc`中处理panic，会返回1，这也是`gopanic`中调用`recovery`方法的作用，`recovery`方法将结果设置为1，这时会跳转到代码的return之前执行其余的`deferproc`方法。
+ 
+ ```go
+// runtine/panic.go
+ 
+// Run a deferred function if there is one.
+// The compiler inserts a call to this at the end of any
+// function which calls defer.
+// If there is a deferred function, this will call runtime·jmpdefer,
+// which will jump to the deferred function such that it appears
+// to have been called by the caller of deferreturn at the point
+// just before deferreturn was called. The effect is that deferreturn
+// is called again and again until there are no more deferred functions.
+// Cannot split the stack because we reuse the caller's frame to
+// call the deferred function.
+
+// The single argument isn't actually used - it just has its address
+// taken so it can be matched against pending defers.
+//go:nosplit
+func deferreturn(arg0 uintptr) {
+	gp := getg()
+	d := gp._defer
+	if d == nil {
+		return
+	}
+
+	// ...
+    
+	fn := d.fn
+	d.fn = nil
+	gp._defer = d.link
+	freedefer(d)
+	jmpdefer(fn, uintptr(unsafe.Pointer(&arg0)))
+}
+```
+
+`deferreturn`没执行一次会将执行完的defer从goroutine的_defer调用链中移除，执行到`jmpdefer`会重新进入`deferreturn`方法中执行直到没有`gp._defer`为`nil`， 这时所有defer执行完毕。
+
 
