@@ -24,6 +24,7 @@ defer语句会在方法执行完毕前、return之前、或者对应的goroutine
 注意:
 
 1. defer只能用在方法、函数内。
+
     错误示例:
 
     ```go
@@ -65,7 +66,7 @@ unsafe.Alignof unsafe.Offsetof unsafe.Sizeof`方法。
 
 5. defer只会在当前的goroutine中调用。
 
-6. defer后的函数调用参数是在defer语句定义时确定的，defer后的方法调用可能会修改方法返回值，谨记: *return语句不是原子指令*。
+6. defer后的函数调用参数是在defer语句定义时确定的，defer后的方法调用可能会修改方法返回值，谨记: **return语句不是原子指令**。
 
 在不执行代码的情况下，猜想下列方法的返回值:
 
