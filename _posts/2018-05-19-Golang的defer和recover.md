@@ -21,7 +21,7 @@ Python的with实现很直观、方便，Golang中提供了defer、recover用来�
 
 defer语句会在方法执行完毕前、return之前、或者对应的goroutine时panic时调用defer后面的方法。
 
-约束:
+注意:
 
 1. defer只能用在方法、函数内。
     错误示例:
@@ -40,7 +40,7 @@ defer语句会在方法执行完毕前、return之前、或者对应的goroutine
     }
 
     func t() int{
-    i:=0
+        i:=0
         defer func (){}()
         return i
     }
@@ -64,6 +64,115 @@ unsafe.Alignof unsafe.Offsetof unsafe.Sizeof`方法。
 4. defer按照逆序执行，及后定义的defer方法先于前面定义的defer方法执行。
 
 5. defer只会在当前的goroutine中调用。
+
+6. defer后的函数调用参数是在defer语句定义时确定的，defer后的方法调用可能会修改方法返回值，谨记: *return语句不是原子指令*。
+
+在不执行代码的情况下，猜想下列方法的返回值:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Printf("test1 result %d\n", test1())
+	fmt.Printf("test1 result %d\n", test2())
+	fmt.Printf("test1 result %d\n", test3())
+	fmt.Printf("test1 result %d\n", test4())
+}
+
+func test1() int {
+	r := 0
+	defer func() {
+		r = r + 1
+	}()
+	return r
+}
+
+func test2() (r int) {
+	r = 0
+	defer func() {
+		r = r + 1
+	}()
+	return
+}
+
+func test3() (r int) {
+	r = 5
+	defer func(r int) {
+		r = r + 5
+	}(r)
+	return
+}
+
+func test4() (r int) {
+	r = 5
+	defer func(r int) {
+		r = r + 5
+	}(r)
+	return 1
+}
+
+```
+
+执行后输出:
+
+```go
+test1 result 0
+test1 result 1
+test1 result 5
+test1 result 1
+```
+
+`test1`很容易理解，与下面代码等价
+
+```go
+func test1() (result int) {
+    r := 0
+    result = r
+    func() {
+        r = r + 1
+    }
+    return
+}
+```
+
+`test2`可以写成
+
+```go
+func test2() (r int) {
+	r = 0
+	func() {
+		r = r + 1
+	}()
+	return
+}
+```
+
+`test3`因为defer后的方法调用参数值在defer定义时已确定，形参`r`的值为`r`的一个值拷贝， 因而可以替换为
+
+```go
+func test3() (r int) {
+	r = 5
+	func(r int) {
+		r = r + 5
+	}(r)
+	return
+}
+```
+
+`test4`中的`return 1`先给返回值`r`赋值为`1`，然后执行defered函数，可以等价为
+
+```go
+func test4() (r int) {
+	r = 5
+    r = 1
+	func(r int) {
+		r = r + 5
+	}(5)  // r在defer定义时的值为5，在return之前才被赋值为1
+	return
+}
+```
 
 ### recover
 
