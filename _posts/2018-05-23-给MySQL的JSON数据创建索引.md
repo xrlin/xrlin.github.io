@@ -2,7 +2,7 @@
 layout: post
 title: 给MySQL的JSON数据创建索引
 date: 2018-05-23
-tags: [MySql 数据库]
+tags: [MySql, 数据库]
 ---
 
 MySQL从5.7.8版本开始支持JSON数据，给处理一些动态变化的数据存储带来方便，但是MySQL中的JSON数据要通过索引进行查询，需要用到[虚拟字段](https://dev.mysql.com/doc/refman/5.7/en/create-table-generated-columns.html)，通过对虚拟字段创建索引从而利用该索引对JSON数据进行查询。
