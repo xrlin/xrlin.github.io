@@ -447,6 +447,6 @@ func deferreturn(arg0 uintptr) {
 }
 ```
 
-`deferreturn`没执行一次会将执行完的defer从goroutine的_defer调用链中移除，执行到`jmpdefer`会重新进入`deferreturn`方法中执行直到没有`gp._defer`为`nil`， 这时所有defer执行完毕。
+`deferreturn`每执行一次会将执行完的defer从goroutine的_defer调用链中移除，执行到`jmpdefer`会重新进入`deferreturn`方法中执行直到没有`gp._defer`为`nil`， 这时所有defer执行完毕。
 
 
