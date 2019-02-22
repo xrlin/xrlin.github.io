@@ -159,7 +159,7 @@ SELECT * FROM users;
       end
 ```
 
-从源码我们可以知道ActiveRecord将Transaction分为了`SavepointTransaction`和`RealTransaction`，`SavepointTransaction`用于需要模拟实现嵌套，在rollback时回滚至对应的标记点，在commit时释放标记点，`RealTransaction`则按照一般事务进行处理，`TransactionManager`类根据需要创建对应的`Transaction`类实例，并维护一个事务列表，处理一整个嵌套事务列表的commit、rollback等调用。
+从源码我们可以知道ActiveRecord将Transaction分为了`SavepointTransaction`和`RealTransaction`，`SavepointTransaction`用于模拟实现嵌套事务，在rollback时回滚至对应的标记点，在commit时释放标记点，`RealTransaction`则按照一般事务进行处理，`TransactionManager`类根据需要创建对应的`Transaction`类实例，并维护一个事务列表，处理一整个嵌套事务列表的commit、rollback等调用。
 
 ActiveRecord通过`ConnectionAdapter`类抽象数据库连接，更深入一些看下调用`transactioin`方法时究竟发生了什么
 
@@ -211,7 +211,7 @@ User.transaction do
 end
 ```
 
-到这里好像对ActvieRecord嵌套事务的实现都了解了，但是想想还有个问题没解决，`TransactionManager`实例是在`ConnectionAdapter`实例中wwei维护和调用的，万一两次调用使用的`ConnectionAdapter`不是同一个，所有的流程不就不能保证了？这就需要通过ActiveRecord的数据库连接池实现来保证。
+到这里好像对ActvieRecord嵌套事务的实现都了解了，但是想想还有个问题没解决，`TransactionManager`实例是在`ConnectionAdapter`实例中维护和调用的，万一两次调用使用的`ConnectionAdapter`不是同一个，所有的流程不就不能保证了？这就需要通过ActiveRecord的数据库连接池实现来保证。
 
 在`active_record/connection_adapters/abstract/connection_pool.rb`文件中实现了数据库连接池连接的维护和分配
 
