@@ -184,7 +184,7 @@ func panic(interface{}) // 触发异常
 func recover() interface{} // 捕获异常并处理
 ```
 
-使用`recover()`方法可以捕获显式嗲用`panic`方法引发的异常或系统的运行时异常（如数组下标越界、nil方法调用），调用panic方法时可以提供参数以传递给`recover()`。
+使用`recover()`方法可以捕获显式地用`panic`方法引发的异常或系统的运行时异常（如数组下标越界、nil方法调用），调用panic方法时可以提供参数以传递给`recover()`。
 
 `recover()`方法在下列情况下会返回nil：
 
