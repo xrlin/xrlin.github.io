@@ -105,11 +105,11 @@ tags: [go]
         a[2] = 21
         fmt.Println(s) // [21, 4, 5]
         s := append(s, 22)
-        fmt.Println(s) // [21, 45, 22]
+        fmt.Println(s) // [21, 4, 5, 22]
         fmt.Println(a) // [1 2 21 4 5 22 7 8 9 10]
         a[4] = 23
-        fmt.Println(s) // [21 4 23 22]
         // 因为a此时是s的底层数组，对s或底层数组a的更改都会影响到s、a两个值
+        fmt.Println(s) // [21, 4, 23, 22]
 
         // 现在看下另一种情况
         s = append(s, []int{1,2,3,4}...)
