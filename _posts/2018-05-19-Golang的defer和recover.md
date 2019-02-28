@@ -47,13 +47,13 @@ defer语句会在方法执行完毕前、return之前、或者对应的goroutine
     }
     ```
 
-2. defer后的表达式必须是function获取method的调用。
+2. defer后的表达式必须是function或者method的调用。
 
     错误示例:
 
     ```go
     func t() int{
-    i:=0
+        i:=0
         defer i++ // prog.go:14:10: expression in defer must be function call
         return i
     }
