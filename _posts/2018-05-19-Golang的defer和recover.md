@@ -142,7 +142,7 @@ func test1() (result int) {
 
 ```go
 func test2() (r int) {
-	r = 0
+    r = 0
 	func() {
 		r = r + 1
 	}()
