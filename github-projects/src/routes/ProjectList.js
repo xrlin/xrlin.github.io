@@ -11,12 +11,18 @@ var ProjectList = React.createClass({
     }).then((result) => {
       let repos = result.filter(repo => repo.fork == false).sort((repo1, repo2) => {
       		if (repo1.stargazers_count > repo2.stargazers_count) {
-			return true;
+			return -1;
 		}
 		if (repo1.stargazers_count < repo2.stargazers_count) {
-			return false;
+			return 1;
 		}
-		return repo1.updated_at > repo2.updated_at;
+		if (repo1.updated_at > repo2.updated_at) {
+			return -1;
+		}
+		if (repo1.updated_at < repo2.updated_at) {
+			return 1;
+		}
+		return 0;
 	});
       this.setState({
         repos: repos
