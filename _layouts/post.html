@@ -39,14 +39,15 @@ layout: compress
 	     </div>
 	</div>
     <section>
-       <!-- comments -->
-      <script src="https://utteranc.es/client.js"
-        repo="github.com/xrlin/xrlin.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-      </script>  
+         <!-- comments -->
+         <script src="https://utteranc.es/client.js"
+            repo="xrlin/xrlin.github.io"
+            issue-term="pathname"
+            label="Comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+        </script>
     </section>
 	{% if page.comments and site.disqus_shortname %}<section id="disqus_thread" class="animated fadeInUp"></section><!-- /#disqus_thread -->{% endif %}
     </header>
