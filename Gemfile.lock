@@ -93,8 +93,8 @@ GEM
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
-    thread_safe (0.3.5)
-    tzinfo (1.2.2)
+    thread_safe (0.3.6)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
 
 PLATFORMS
